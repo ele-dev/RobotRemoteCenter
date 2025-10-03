@@ -11,8 +11,6 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # Static linking of c/c++ std libraries to avoid dragging
 add_link_options(-static-libstdc++ -static-libgcc)
 
-# ...
-
 # ImGui directories
 set(IMGUI_DIR ${CMAKE_SOURCE_DIR}/external/imgui)
 set(IMGUI_BACKENDS ${IMGUI_DIR}/backends)
@@ -50,3 +48,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
     SDL3::SDL3
 )
+
+# install binary to system
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
