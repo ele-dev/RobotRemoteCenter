@@ -21,6 +21,9 @@ namespace Core
 {
     const int window_width = 1280;
     const int window_height = 720;
+    const std::string app_name = "Robot Remote Center";
+    const std::string app_version = "1.0.0";
+    const std::string app_identifier = "com.hs-esslingen.apps.robotremotecenter";
 
     struct AnalogJoystickState
     {

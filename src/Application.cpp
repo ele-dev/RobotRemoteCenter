@@ -56,6 +56,7 @@ bool Application::Init()
 
     result = this->InitGamepad();
     if(!result) {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "Warning", "No Gamepad device available", this->m_window);
         return false;
     }
 
@@ -88,11 +89,11 @@ void Application::Update()
     }
     else if(event.type == SDL_EVENT_GAMEPAD_AXIS_MOTION) {
         if(event.gaxis.axis == SDL_GAMEPAD_AXIS_LEFTX) {
-            std::cout << "Left stick X axis: " << event.gaxis.value << "\n";
+            // std::cout << "Left stick X axis: " << event.gaxis.value << "\n";
             this->m_leftStickState.xAxisValue = event.gaxis.value;
         }
         if(event.gaxis.axis == SDL_GAMEPAD_AXIS_LEFTY) {
-            std::cout << "Left stick Y axis: " << event.gaxis.value << "\n";
+            // std::cout << "Left stick Y axis: " << event.gaxis.value << "\n";
             this->m_leftStickState.yAxisValue = event.gaxis.value;
         }
     }
@@ -130,6 +131,18 @@ void Application::Render()
 
 bool Application::InitGui() 
 {
+    // set descriptive metadata about application
+    if(!SDL_SetAppMetadata(app_name.c_str(), app_version.c_str(), app_identifier.c_str())) {
+        SDL_Log("SDL3 Error: %s", SDL_GetError());
+    }
+
+    // ouput compiled and linked version numbers of SDL3
+    const int compiled = SDL_VERSION;
+    const int linked   = SDL_GetVersion();
+    SDL_Log("Detected platform: %s \n", SDL_GetPlatform());
+    SDL_Log("Compiled with SDL version %d.%d.%d \n", SDL_VERSIONNUM_MAJOR(compiled), SDL_VERSIONNUM_MINOR(compiled), SDL_VERSIONNUM_MICRO(compiled));
+    SDL_Log("Linked against SDL version %d.%d.%d \n", SDL_VERSIONNUM_MAJOR(linked), SDL_VERSIONNUM_MINOR(linked), SDL_VERSIONNUM_MICRO(linked));
+    
     // init SDL3 API
     if(!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD)) {
         SDL_Log("SDL3 Error: %s", SDL_GetError());
@@ -186,6 +199,9 @@ bool Application::InitGui()
     // setup renderer backend 
     ImGui_ImplSDL3_InitForSDLRenderer(this->m_window, this->m_renderer);
     ImGui_ImplSDLRenderer3_Init(this->m_renderer);
+
+    SDL_Log("Video Driver: %s \n", SDL_GetCurrentVideoDriver());
+    // SDL_SetWindowFullscreen(this->m_window, true);
 
     return true;
 }

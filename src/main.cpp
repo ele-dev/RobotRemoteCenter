@@ -11,6 +11,7 @@ int main(int arg, char **argc)
 
     bool result = app.Init();
     if(!result) {
+        std::cout << "Initialization failed! Exit now. \n";
         return EXIT_FAILURE;
     }
 
