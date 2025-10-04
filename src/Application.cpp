@@ -63,6 +63,8 @@ bool Application::Init()
     // init additional stuff here
     // ...
 
+    SDL_ShowWindow(this->m_window);
+
     return true;
 }
 
@@ -201,7 +203,7 @@ bool Application::InitGui()
     ImGui_ImplSDLRenderer3_Init(this->m_renderer);
 
     SDL_Log("Video Driver: %s \n", SDL_GetCurrentVideoDriver());
-    // SDL_SetWindowFullscreen(this->m_window, true);
+    SDL_HideWindow(this->m_window);
 
     return true;
 }
